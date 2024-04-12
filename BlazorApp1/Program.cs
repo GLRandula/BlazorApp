@@ -1,6 +1,14 @@
-using BlazorApp1.Components;
+﻿using BlazorApp1.Components;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using BlazorApp1.Data;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<BlazorApp1Context>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("BlazorApp1Context") ?? throw new InvalidOperationException("Connection string 'BlazorApp1Context' not found.")));
+
+builder.Services.AddQuickGridEntityFrameworkAdapter();;
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
